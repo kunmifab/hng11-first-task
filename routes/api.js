@@ -17,8 +17,8 @@ router.get('/hello', async(req, res) => {
             const weather = weatherResponse.data;
             return res.send({
                 client_ip: clientIp,
-                location: geoResponse.data.city,
-                greeting: `Hello, ${visitor_name}!, the temperature is ${weather.hourly.temperature_2m[0]} degrees Celcius in ${geoResponse.data.city}`,
+                location: geoResponse.data.state_prov,
+                greeting: `Hello, ${visitor_name}!, the temperature is ${weather.hourly.temperature_2m[0]} degrees Celcius in ${geoResponse.data.state_prov}`,
             }).status(200);
         }catch(error){
             return res.send(error).status(500);
