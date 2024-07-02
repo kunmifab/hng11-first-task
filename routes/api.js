@@ -7,11 +7,11 @@ router.get('/hello', async(req, res) => {
     if(req.query.visitor_name){
         try{
             const visitor_name = req.query.visitor_name.replace(/["']/g, '');
-            const geoResponse = await axios.get(`https://api.ipgeolocation.io/ipgeo?apiKey=782a8ddf235f4df58088847e647a942b&ip=${IP.address()}`);
+            const geoResponse = await axios.get(`https://api.ipgeolocation.io/ipgeo?apiKey=782a8ddf235f4df58088847e647a942b&ip=${req.clientIp}`);
             const weatherResponse = await axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${geoResponse.data.latitude}&longitude=${geoResponse.data.longitude}&hourly=temperature_2m`);
             const weather = weatherResponse.data;
             return res.send({
-                client_ip: IP.address(),
+                client_ip: req.clientIp,
                 location: geoResponse.data.city,
                 greeting: `Hello, ${visitor_name}!, the temperature is ${weather.hourly.temperature_2m[0]} degrees Celcius in ${geoResponse.data.city}`,
             }).status(200);
